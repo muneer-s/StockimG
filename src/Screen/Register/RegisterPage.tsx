@@ -279,7 +279,7 @@ const RegisterPage = () => {
         </div>
 
         <div className="mt-6 text-center">
-          <p className="text-gray-300">
+          <p className="text-purple-900">
             Already have an account?{' '}
             <button
               onClick={() => navigate('/login')}

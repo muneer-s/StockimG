@@ -1,12 +1,7 @@
 import { useState } from "react";
 import { Eye, EyeOff, Sparkles, Heart } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
-// Mock navigate function since we don't have react-router-dom
-const useNavigate = () => {
-  return (direction: any) => {
-    console.log(`Navigate ${direction}`);
-  };
-};
 
 // Mock Lottie animation component
 const Lottie = () => {
@@ -26,6 +21,7 @@ const Lottie = () => {
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
   
   const togglePassword = () => setShowPassword((prev) => !prev);
@@ -159,7 +155,6 @@ const LoginPage = () => {
                     </button>
 
                     <button
-                      type="button"
                       onClick={() => navigate(-1)}
                       className="relative w-full py-4 rounded-2xl font-semibold text-white/80 transition-all duration-300 overflow-hidden group border border-white/20 hover:border-white/40"
                     >
