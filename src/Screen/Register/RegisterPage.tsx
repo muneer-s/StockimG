@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { Eye, EyeOff, User, Mail, Phone, Lock, Check, X, Sparkles, UserPlus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import toast from 'react-hot-toast';
+import { signup } from "../../Api/api";
+
+
 
 // Mock Lottie animation component for registration
 const RegistrationAnimation = () => {
@@ -40,10 +44,10 @@ const RegisterPage = () => {
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const navigate = useNavigate();
-  
+
   const togglePassword = () => setShowPassword((prev) => !prev);
   const toggleConfirmPassword = () => setShowConfirmPassword((prev) => !prev);
-  
+
   // Password strength checker
   const getPasswordStrength = (password: string) => {
     if (password.length === 0) return { strength: 0, label: '', color: '' };
@@ -80,8 +84,10 @@ const RegisterPage = () => {
       newErrors.email = 'Email is invalid';
     }
 
-    if (!formData.phone.trim()) {
+    if (!formData.phone) {
       newErrors.phone = 'Phone number is required';
+    } else if (!/^\d{10}$/.test(formData.phone)) {
+      newErrors.phone = 'Phone number must be exactly 10 digits';
     }
 
     if (!formData.password) {
@@ -101,26 +107,40 @@ const RegisterPage = () => {
   };
 
   const handleSubmit = async () => {
-    
     if (!validateForm()) {
       return;
     }
 
     setIsLoading(true);
-    
-    // Simulate API call
-    setTimeout(() => {
+
+    try {
+      const response:any = await signup({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        password: formData.password,
+      });
+      console.log(11, response)
+
+      if (response.success) {
+        toast.success(response.message);
+        navigate(`/otp?email=${response.data.email}`);
+      }
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || 'An error occurred during registration.');
+      console.error(error);
+    } finally {
       setIsLoading(false);
-      console.log('Registration successful:', formData);
-      navigate('/dashboard');
-    }, 2000);
+    }
   };
+
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-300 via-pink-100 to-pink-300 flex items-center justify-center p-4">
       <div className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-8 w-full max-w-md border border-white/20">
         <RegistrationAnimation />
-        
+
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-indigo-900 mb-2 flex items-center justify-center gap-2">
             <Sparkles className="w-8 h-8 text-yellow-400" />
@@ -198,7 +218,7 @@ const RegisterPage = () => {
                 {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
               </button>
             </div>
-            
+
             {/* Password Strength Indicator */}
             {formData.password && (
               <div className="space-y-2">
@@ -212,17 +232,16 @@ const RegisterPage = () => {
                   {[1, 2, 3].map((level) => (
                     <div
                       key={level}
-                      className={`h-2 flex-1 rounded-full ${
-                        level <= passwordStrength.strength
+                      className={`h-2 flex-1 rounded-full ${level <= passwordStrength.strength
                           ? level === 1 ? 'bg-red-400' : level === 2 ? 'bg-yellow-400' : 'bg-green-400'
                           : 'bg-gray-900'
-                      }`}
+                        }`}
                     />
                   ))}
                 </div>
               </div>
             )}
-            
+
             {errors.password && <p className="text-red-400 text-sm">{errors.password}</p>}
           </div>
 
@@ -245,7 +264,7 @@ const RegisterPage = () => {
               >
                 {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
               </button>
-              
+
               {/* Password Match Indicator */}
               {formData.confirmPassword && (
                 <div className="absolute right-12 top-1/2 transform -translate-y-1/2">
