@@ -8,7 +8,7 @@ const initialState = {
         userInfoRaw && userInfoRaw !== 'undefined'
             ? JSON.parse(userInfoRaw)
             : null,
-    user:
+    userToken:
         userAddressRaw && userAddressRaw !== 'undefined'
             ? JSON.parse(userAddressRaw)
             : null,
@@ -19,8 +19,8 @@ export const authSlice = createSlice({
     initialState,
     reducers: {
         saveUser: (state, action) => {
-            state.user = action.payload;
-            localStorage.setItem('userAddress', JSON.stringify(action.payload));
+            state.userToken = action.payload;
+            localStorage.setItem('userToken', JSON.stringify(action.payload));
         },
         setUserCredential: (state, action) => {
             state.userData = action.payload;
@@ -32,7 +32,7 @@ export const authSlice = createSlice({
         },
         userLogout: (state) => {
             state.userData = null;
-            state.user = null;
+            state.userToken = null;
             localStorage.removeItem('userInfo');
             localStorage.removeItem('userAddress');
         }

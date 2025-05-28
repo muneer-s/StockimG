@@ -13,13 +13,17 @@ const Header = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
-  const { userData } = useAppSelector((state) => state.auth)
+const { userToken, userData } = useAppSelector((state) => state.auth);
+  console.log('userToken :    ',userToken);
   console.log('userData :    ',userData);
-  
+
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  useEffect(() => {
+        if (userToken) navigate('/');
+    }, [userToken, navigate]);
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -89,10 +93,17 @@ const handleLogout = async () => {
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-rose-400 to-pink-500 group-hover:w-full transition-all duration-300"></span>
           </a>
           <a
-            href="/"
+            href="/viewImages"
             className="relative text-slate-700 font-medium hover:text-rose-600 transition-all duration-300 group"
           >
             View Image
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-rose-400 to-pink-500 group-hover:w-full transition-all duration-300"></span>
+          </a>
+          <a
+            href="/addImage"
+            className="relative text-slate-700 font-medium hover:text-rose-600 transition-all duration-300 group"
+          >
+            Add Image
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-rose-400 to-pink-500 group-hover:w-full transition-all duration-300"></span>
           </a>
           {userData ? (
@@ -140,10 +151,16 @@ const handleLogout = async () => {
               Home
             </a>
             <a
-              href="#"
+              href="/viewImages"
               className="flex items-center px-4 py-3 text-slate-700 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition-all duration-300 font-medium"
             >
               View Image
+            </a>
+             <a
+              href="/addImage"
+              className="flex items-center px-4 py-3 text-slate-700 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition-all duration-300 font-medium"
+            >
+              Add Image
             </a>
             {userData ? (
               <span className="flex items-center px-4 py-3 text-slate-700 font-medium">

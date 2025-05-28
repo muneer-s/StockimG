@@ -1,9 +1,20 @@
 import React, { useState } from 'react';
+import Swal from 'sweetalert2';
+import { uploadImage } from '../../Api/api';
+import { useAppSelector } from '../../Redux/store';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const ImageAdd = () => {
   const [title, setTitle] = useState('');
   const [image, setImage] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
+  const { userData } = useAppSelector((state) => state.auth);
+  const email = userData.email
+
+  const navigate = useNavigate()
+  
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -18,17 +29,60 @@ const ImageAdd = () => {
     setPreviewUrl(null);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if ( !email) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Please login',
+        text: 'Please login!',
+        confirmButtonColor: '#d33',
+      }); 
+      return;
+    }
+
     if (!title || !image) {
-      alert('Please add a title and an image!');
+      Swal.fire({
+        icon: 'warning',
+        title: 'Missing Fields',
+        text: 'Please add a title and an image!',
+        confirmButtonColor: '#d33',
+      }); 
       return;
     }
 
     // Handle form submission (e.g., send to backend)
     console.log('Title:', title);
     console.log('Image:', image);
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("image", image);
+    formData.append("email", email);
+
+
+ try {
+       let result:any = await uploadImage(formData);
+       console.log(111,result);
+       
+
+     toast.success(result.message)
+
+      setTitle("");
+      setImage(null);
+      setPreviewUrl(null);
+      navigate('/')
+      
+    } catch (err) {
+      Swal.fire({
+        icon: "error",
+        title: "Upload Failed",
+        text: "Something went wrong. Try again!",
+        confirmButtonColor: "#d33",
+      });
+    }
+
   };
 
   return (

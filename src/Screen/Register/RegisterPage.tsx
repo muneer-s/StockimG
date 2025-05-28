@@ -3,6 +3,7 @@ import { Eye, EyeOff, User, Mail, Phone, Lock, Check, X, Sparkles, UserPlus } fr
 import { useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast';
 import { signup } from "../../Api/api";
+import Header from "../../Components/Header/Header";
 
 
 
@@ -114,7 +115,7 @@ const RegisterPage = () => {
     setIsLoading(true);
 
     try {
-      const response:any = await signup({
+      const response: any = await signup({
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
@@ -137,179 +138,183 @@ const RegisterPage = () => {
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-300 via-pink-100 to-pink-300 flex items-center justify-center p-4">
-      <div className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-8 w-full max-w-md border border-white/20">
-        <RegistrationAnimation />
+    <>
+      <Header />
+      <div className="min-h-screen bg-gradient-to-br from-pink-300 via-pink-100 to-pink-300 flex items-center justify-center p-4">
+        <div className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-8 w-full max-w-md border border-white/20">
+          <RegistrationAnimation />
 
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-indigo-900 mb-2 flex items-center justify-center gap-2">
-            <Sparkles className="w-8 h-8 text-yellow-400" />
-            Create Account
-          </h1>
-          <p className="text-indigo-950">Join us and start your journey</p>
-        </div>
-
-        <div className="space-y-6">
-          {/* Name Field */}
-          <div className="space-y-2">
-            <label className="block text-sm font-medium text-indigo-950">Full Name</label>
-            <div className="relative">
-              <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-indigo-950 w-5 h-5" />
-              <input
-                type="text"
-                value={formData.name}
-                onChange={(e) => handleInputChange('name', e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-indigo-950 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent backdrop-blur-sm"
-                placeholder="Enter your full name"
-              />
-            </div>
-            {errors.name && <p className="text-red-400 text-sm">{errors.name}</p>}
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold text-indigo-900 mb-2 flex items-center justify-center gap-2">
+              <Sparkles className="w-8 h-8 text-yellow-400" />
+              Create Account
+            </h1>
+            <p className="text-indigo-950">Join us and start your journey</p>
           </div>
 
-          {/* Email Field */}
-          <div className="space-y-2">
-            <label className="block text-sm font-medium text-indigo-950">Email Address</label>
-            <div className="relative">
-              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-              <input
-                type="email"
-                value={formData.email}
-                onChange={(e) => handleInputChange('email', e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-indigo-950 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent backdrop-blur-sm"
-                placeholder="Enter your email"
-              />
-            </div>
-            {errors.email && <p className="text-red-400 text-sm">{errors.email}</p>}
-          </div>
-
-          {/* Phone Field */}
-          <div className="space-y-2">
-            <label className="block text-sm font-medium text-indigo-950">Phone Number</label>
-            <div className="relative">
-              <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-              <input
-                type="tel"
-                value={formData.phone}
-                onChange={(e) => handleInputChange('phone', e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-indigo-950 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent backdrop-blur-sm"
-                placeholder="Enter your phone number"
-              />
-            </div>
-            {errors.phone && <p className="text-red-400 text-sm">{errors.phone}</p>}
-          </div>
-
-          {/* Password Field */}
-          <div className="space-y-2">
-            <label className="block text-sm font-medium text-indigo-950">Password</label>
-            <div className="relative">
-              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-              <input
-                type={showPassword ? "text" : "password"}
-                value={formData.password}
-                onChange={(e) => handleInputChange('password', e.target.value)}
-                className="w-full pl-10 pr-12 py-3 bg-white/10 border border-white/20 rounded-lg text-indigo-950 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent backdrop-blur-sm"
-                placeholder="Create a password"
-              />
-              <button
-                type="button"
-                onClick={togglePassword}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-indigo-950 hover:text-white transition-colors"
-              >
-                {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-              </button>
+          <div className="space-y-6">
+            {/* Name Field */}
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-indigo-950">Full Name</label>
+              <div className="relative">
+                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-indigo-950 w-5 h-5" />
+                <input
+                  type="text"
+                  value={formData.name}
+                  onChange={(e) => handleInputChange('name', e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-indigo-950 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent backdrop-blur-sm"
+                  placeholder="Enter your full name"
+                />
+              </div>
+              {errors.name && <p className="text-red-400 text-sm">{errors.name}</p>}
             </div>
 
-            {/* Password Strength Indicator */}
-            {formData.password && (
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-indigo-950">Password Strength:</span>
-                  <span className={`text-sm font-medium ${passwordStrength.color}`}>
-                    {passwordStrength.label}
-                  </span>
-                </div>
-                <div className="flex space-x-1">
-                  {[1, 2, 3].map((level) => (
-                    <div
-                      key={level}
-                      className={`h-2 flex-1 rounded-full ${level <= passwordStrength.strength
+            {/* Email Field */}
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-indigo-950">Email Address</label>
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <input
+                  type="email"
+                  value={formData.email}
+                  onChange={(e) => handleInputChange('email', e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-indigo-950 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent backdrop-blur-sm"
+                  placeholder="Enter your email"
+                />
+              </div>
+              {errors.email && <p className="text-red-400 text-sm">{errors.email}</p>}
+            </div>
+
+            {/* Phone Field */}
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-indigo-950">Phone Number</label>
+              <div className="relative">
+                <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <input
+                  type="tel"
+                  value={formData.phone}
+                  onChange={(e) => handleInputChange('phone', e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-indigo-950 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent backdrop-blur-sm"
+                  placeholder="Enter your phone number"
+                />
+              </div>
+              {errors.phone && <p className="text-red-400 text-sm">{errors.phone}</p>}
+            </div>
+
+            {/* Password Field */}
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-indigo-950">Password</label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <input
+                  type={showPassword ? "text" : "password"}
+                  value={formData.password}
+                  onChange={(e) => handleInputChange('password', e.target.value)}
+                  className="w-full pl-10 pr-12 py-3 bg-white/10 border border-white/20 rounded-lg text-indigo-950 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent backdrop-blur-sm"
+                  placeholder="Create a password"
+                />
+                <button
+                  type="button"
+                  onClick={togglePassword}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-indigo-950 hover:text-white transition-colors"
+                >
+                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                </button>
+              </div>
+
+              {/* Password Strength Indicator */}
+              {formData.password && (
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-indigo-950">Password Strength:</span>
+                    <span className={`text-sm font-medium ${passwordStrength.color}`}>
+                      {passwordStrength.label}
+                    </span>
+                  </div>
+                  <div className="flex space-x-1">
+                    {[1, 2, 3].map((level) => (
+                      <div
+                        key={level}
+                        className={`h-2 flex-1 rounded-full ${level <= passwordStrength.strength
                           ? level === 1 ? 'bg-red-400' : level === 2 ? 'bg-yellow-400' : 'bg-green-400'
                           : 'bg-gray-900'
-                        }`}
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {errors.password && <p className="text-red-400 text-sm">{errors.password}</p>}
-          </div>
-
-          {/* Confirm Password Field */}
-          <div className="space-y-2">
-            <label className="block text-sm font-medium text-indigo-950">Confirm Password</label>
-            <div className="relative">
-              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-indigo-950 w-5 h-5" />
-              <input
-                type={showConfirmPassword ? "text" : "password"}
-                value={formData.confirmPassword}
-                onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
-                className="w-full pl-10 pr-12 py-3 bg-white/10 border border-white/20 rounded-lg text-indigo-950 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent backdrop-blur-sm"
-                placeholder="Confirm your password"
-              />
-              <button
-                type="button"
-                onClick={toggleConfirmPassword}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
-              >
-                {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-              </button>
-
-              {/* Password Match Indicator */}
-              {formData.confirmPassword && (
-                <div className="absolute right-12 top-1/2 transform -translate-y-1/2">
-                  {passwordsMatch ? (
-                    <Check className="w-5 h-5 text-green-400" />
-                  ) : (
-                    <X className="w-5 h-5 text-red-400" />
-                  )}
+                          }`}
+                      />
+                    ))}
+                  </div>
                 </div>
               )}
+
+              {errors.password && <p className="text-red-400 text-sm">{errors.password}</p>}
             </div>
-            {errors.confirmPassword && <p className="text-red-400 text-sm">{errors.confirmPassword}</p>}
+
+            {/* Confirm Password Field */}
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-indigo-950">Confirm Password</label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-indigo-950 w-5 h-5" />
+                <input
+                  type={showConfirmPassword ? "text" : "password"}
+                  value={formData.confirmPassword}
+                  onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
+                  className="w-full pl-10 pr-12 py-3 bg-white/10 border border-white/20 rounded-lg text-indigo-950 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent backdrop-blur-sm"
+                  placeholder="Confirm your password"
+                />
+                <button
+                  type="button"
+                  onClick={toggleConfirmPassword}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+                >
+                  {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                </button>
+
+                {/* Password Match Indicator */}
+                {formData.confirmPassword && (
+                  <div className="absolute right-12 top-1/2 transform -translate-y-1/2">
+                    {passwordsMatch ? (
+                      <Check className="w-5 h-5 text-green-400" />
+                    ) : (
+                      <X className="w-5 h-5 text-red-400" />
+                    )}
+                  </div>
+                )}
+              </div>
+              {errors.confirmPassword && <p className="text-red-400 text-sm">{errors.confirmPassword}</p>}
+            </div>
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              disabled={isLoading}
+              onClick={handleSubmit}
+              className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-transparent disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+            >
+              {isLoading ? (
+                <div className="flex items-center justify-center">
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                  Creating Account...
+                </div>
+              ) : (
+                'Create Account'
+              )}
+            </button>
           </div>
 
-          {/* Submit Button */}
-          <button
-            type="submit"
-            disabled={isLoading}
-            onClick={handleSubmit}
-            className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-transparent disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-          >
-            {isLoading ? (
-              <div className="flex items-center justify-center">
-                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                Creating Account...
-              </div>
-            ) : (
-              'Create Account'
-            )}
-          </button>
-        </div>
-
-        <div className="mt-6 text-center">
-          <p className="text-purple-900">
-            Already have an account?{' '}
-            <button
-              onClick={() => navigate('/login')}
-              className="text-purple-400 hover:text-purple-300 font-medium transition-colors"
-            >
-              Sign In
-            </button>
-          </p>
+          <div className="mt-6 text-center">
+            <p className="text-purple-900">
+              Already have an account?{' '}
+              <button
+                onClick={() => navigate('/login')}
+                className="text-purple-400 hover:text-purple-300 font-medium transition-colors"
+              >
+                Sign In
+              </button>
+            </p>
+          </div>
         </div>
       </div>
-    </div>
+    </>
+
   );
 };
 

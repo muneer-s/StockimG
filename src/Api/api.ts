@@ -42,11 +42,7 @@ const login = async (credentials: { email: string; password: string }) => {
         return result.data
     } catch (error: any) {
         console.log(error);
-        if (error.response && error.response.data) {
-            throw error.response.data;
-        } else {
-            throw { message: 'Network error or server unavailable' };
-        }
+       throw error
     }
 }
 
@@ -60,10 +56,63 @@ const logout = async (Credential: { email: string }) => {
     }
 }
 
+const uploadImage = async (formData: FormData) => {
+  try {
+    const response = await Api.post(userRoutes.addImage, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Upload failed:", error);
+    throw error;
+  }
+};
+
+const getImages = async (email: string) => {
+  try {
+    const response = await Api.get(`${userRoutes.viewImages}?email=${email}`);
+    return response.data; 
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+const editImage = async (imageId: string | undefined, formData: FormData) => {
+    try {
+        const response = await Api.put(userRoutes.editImage, formData, {
+            params: { imageId },
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        })
+        return response.data
+    } catch (error) {
+        throw error;
+    }
+}
+
+const deleteImage = async(imageId:string)=>{
+    try {
+        const response = await Api.delete(userRoutes.deleteImage, {params: { imageId }})
+
+        return response.data
+    } catch (error) {
+        throw error
+    }
+}
+
+
 export {
     verifyOtp,
     resendOtp,
     signup,
     login,
     logout,
+    uploadImage,
+    getImages,
+    editImage,
+    deleteImage
 }

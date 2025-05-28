@@ -5,10 +5,10 @@ const userRoutes = {
     resendOtp: "/otp/resendOtp",
     singIn: '/user/login',
     logout: '/user/logout',
-    addImage: '/user/addImage',
-    editImage: '/user/editImage',
+    addImage: '/image/addImage',
+    editImage: '/image/editImage',
     deleteImage: '/user/deleteImage',
-    viewImages: '/user/viewImages',
-    rearrangeImages: '/user/rearrangeImages'
+    viewImages: '/image/viewImages',
+    rearrangeImages: '/user/rearrangeImages',
 }
 export default userRoutes
