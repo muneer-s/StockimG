@@ -75,6 +75,7 @@ const getImages = async (email: string) => {
         const response = await Api.get(`${userRoutes.viewImages}?email=${email}`);
         return response.data;
     } catch (error) {
+        console.log(1111,error);
         throw error;
     }
 };
@@ -104,6 +105,16 @@ const deleteImage = async (imageId: string) => {
     }
 }
 
+const updateImageOrder = async (images: { _id: string, position: number }[]) => {
+  try {
+      return await Api.put(userRoutes.reorder, { images });
+
+  } catch (error) {
+    throw error
+  }
+};
+
+
 
 export {
     verifyOtp,
@@ -114,5 +125,6 @@ export {
     uploadImage,
     getImages,
     editImage,
-    deleteImage
+    deleteImage,
+    updateImageOrder
 }

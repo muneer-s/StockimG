@@ -10,5 +10,6 @@ const userRoutes = {
     deleteImage: '/image/deleteImage',
     viewImages: '/image/viewImages',
     rearrangeImages: '/user/rearrangeImages',
+    reorder:'/image/reorder'
 }
 export default userRoutes

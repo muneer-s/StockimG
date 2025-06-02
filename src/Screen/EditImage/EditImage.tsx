@@ -1,4 +1,3 @@
-import React from 'react'
 import Header from '../../Components/Header/Header'
 import EditImageComp from '../../Components/EditImage/EditImageComp'
 
@@ -7,9 +6,6 @@ const EditImage = () => {
     <div>
         <Header/>
         <EditImageComp/>
-
-
-
     </div>
   )
 }
