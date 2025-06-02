@@ -9,12 +9,12 @@ const ImageAdd = () => {
   const [title, setTitle] = useState('');
   const [image, setImage] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-
+  const [isUploading, setIsUploading] = useState(false);
   const { userData } = useAppSelector((state) => state.auth);
   const email = userData.email
 
   const navigate = useNavigate()
-  
+
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -32,23 +32,23 @@ const ImageAdd = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if ( !email) {
+    if (!email) {
       Swal.fire({
         icon: 'warning',
         title: 'Please login',
         text: 'Please login!',
         confirmButtonColor: '#d33',
-      }); 
+      });
       return;
     }
 
-    if (!title || !image) {
+    if (!title.trim() || !image) {
       Swal.fire({
         icon: 'warning',
         title: 'Missing Fields',
         text: 'Please add a title and an image!',
         confirmButtonColor: '#d33',
-      }); 
+      });
       return;
     }
 
@@ -61,19 +61,19 @@ const ImageAdd = () => {
     formData.append("image", image);
     formData.append("email", email);
 
+    setIsUploading(true);
+    try {
+      let result: any = await uploadImage(formData);
+      console.log(111, result);
 
- try {
-       let result:any = await uploadImage(formData);
-       console.log(111,result);
-       
 
-     toast.success(result.message)
+      toast.success(result.message)
 
       setTitle("");
       setImage(null);
       setPreviewUrl(null);
       navigate('/')
-      
+
     } catch (err) {
       Swal.fire({
         icon: "error",
@@ -81,6 +81,9 @@ const ImageAdd = () => {
         text: "Something went wrong. Try again!",
         confirmButtonColor: "#d33",
       });
+    } finally {
+      setIsUploading(false);
+
     }
 
   };
@@ -131,10 +134,12 @@ const ImageAdd = () => {
 
           <button
             type="submit"
+            disabled={isUploading}
             className="w-full bg-pink-600 hover:bg-pink-700 text-white font-semibold py-2 px-4 rounded-md transition"
           >
-            Submit
+            {isUploading ? 'Uploading...' : 'Submit'}
           </button>
+
         </form>
       </div>
     </div>

@@ -1,8 +1,12 @@
 import { useEffect, useState } from 'react';
-import { getImages } from '../../Api/api';
+import { deleteImage, getImages } from '../../Api/api';
 import { useAppSelector } from '../../Redux/store';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
+
 
 interface ImageData {
+  _id:string;
   email: string;
   title: string;
   image: string;
@@ -11,6 +15,8 @@ interface ImageData {
 const ImageLists = () => {
   const { userData } = useAppSelector((state) => state.auth);
   const [images, setImages] = useState<ImageData[]>([]);
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -26,6 +32,30 @@ const ImageLists = () => {
 
     fetchImages();
   }, [userData.email]);
+
+
+  const handleEditClick = (image: ImageData) => {
+    navigate('/editImage', { state: { image } });
+  };
+
+
+  const handleDeleteClick = async (imageId: string) => {
+    try {
+      const response: any = await deleteImage(imageId);
+
+      if (response?.success) {
+        toast.success(response.message || "Image deleted successfully");
+        // Remove from local state
+        setImages((prev) => prev.filter((img) => img._id !== imageId));
+      } else {
+        toast.error("Failed to delete image");
+      }
+    } catch (error) {
+      console.error("Delete failed:", error);
+      toast.error("An error occurred while deleting");
+    }
+  };
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-pink-50 p-6 mt-20">
@@ -54,15 +84,15 @@ const ImageLists = () => {
           >
             {/* Image Container */}
             <div className="relative overflow-hidden">
-              <img 
-                src={img.image} 
-                className="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-110" 
+              <img
+                src={img.image}
+                className="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-110"
                 alt={img.title}
                 loading="lazy"
               />
               {/* Gradient Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              
+
               {/* Hover Icons */}
               <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <div className="bg-white/20 backdrop-blur-sm rounded-full p-2">
@@ -78,7 +108,7 @@ const ImageLists = () => {
               <h3 className="text-lg font-semibold text-gray-800 mb-2 line-clamp-2 group-hover:text-purple-600 transition-colors duration-300">
                 {img.title}
               </h3>
-              
+
               {/* Decorative Elements */}
               <div className="flex items-center justify-between">
                 <div className="flex space-x-1">
@@ -86,11 +116,25 @@ const ImageLists = () => {
                   <div className="w-2 h-2 bg-pink-400 rounded-full"></div>
                   <div className="w-2 h-2 bg-rose-400 rounded-full"></div>
                 </div>
-                
+
                 {/* View Button */}
-                <button className="opacity-0 group-hover:opacity-100 transition-all duration-300 text-sm text-purple-600 hover:text-purple-800 font-medium">
+                {/* <button className="opacity-0 group-hover:opacity-100 transition-all duration-300 text-sm text-purple-600 hover:text-purple-800 font-medium">
                   View →
+                </button> */}
+                <button
+                  onClick={() => handleDeleteClick(img._id)} // or img._id
+                  className="opacity-0 group-hover:opacity-100 transition-all duration-300 text-sm text-red-600 hover:text-red-800 font-medium"
+                >
+                  Delete 🗑
                 </button>
+
+                <button
+                  onClick={() => handleEditClick(img)}
+                  className="opacity-0 group-hover:opacity-100 transition-all duration-300 text-sm text-blue-600 hover:text-blue-800 font-medium"
+                >
+                  Edit ✎
+                </button>
+
               </div>
             </div>
 

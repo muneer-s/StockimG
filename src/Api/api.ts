@@ -4,9 +4,9 @@ import type { UserData } from "../Interfaces/Interfaces.ts";
 
 const signup = async (userData: UserData) => {
     try {
-        console.log(99,userData)
+        console.log(99, userData)
         const result = await Api.post(userRoutes.signup, userData)
-        console.log('result : ',result)
+        console.log('result : ', result)
         return result.data;
     } catch (error) {
         throw error
@@ -42,7 +42,7 @@ const login = async (credentials: { email: string; password: string }) => {
         return result.data
     } catch (error: any) {
         console.log(error);
-       throw error
+        throw error
     }
 }
 
@@ -57,26 +57,26 @@ const logout = async (Credential: { email: string }) => {
 }
 
 const uploadImage = async (formData: FormData) => {
-  try {
-    const response = await Api.post(userRoutes.addImage, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    return response.data;
-  } catch (error) {
-    console.error("Upload failed:", error);
-    throw error;
-  }
+    try {
+        const response = await Api.post(userRoutes.addImage, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Upload failed:", error);
+        throw error;
+    }
 };
 
 const getImages = async (email: string) => {
-  try {
-    const response = await Api.get(`${userRoutes.viewImages}?email=${email}`);
-    return response.data; 
-  } catch (error) {
-    throw error;
-  }
+    try {
+        const response = await Api.get(`${userRoutes.viewImages}?email=${email}`);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
 };
 
 
@@ -88,16 +88,16 @@ const editImage = async (imageId: string | undefined, formData: FormData) => {
                 "Content-Type": "multipart/form-data",
             },
         })
+        console.log('edit image nte respinse : ',response)
         return response.data
     } catch (error) {
         throw error;
     }
 }
 
-const deleteImage = async(imageId:string)=>{
+const deleteImage = async (imageId: string) => {
     try {
-        const response = await Api.delete(userRoutes.deleteImage, {params: { imageId }})
-
+        const response = await Api.delete(userRoutes.deleteImage, { params: { imageId } })
         return response.data
     } catch (error) {
         throw error

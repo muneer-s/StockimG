@@ -8,11 +8,14 @@ import ViewImages from "./Screen/ViewImages/ViewImages";
 import { Provider } from "react-redux";
 import { store } from "./Redux/store";
 import UserProtecteRoute from "./Middleware/UserProtecteRoute";
+import EditImage from "./Screen/EditImage/EditImage";
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   return (
     <>
       <Provider store={store}>
+        <Toaster />
         <Router >
           <Routes>
             <Route path="/" element={<HomePage />} />
@@ -24,6 +27,7 @@ function App() {
             {/* protected Routes */}
             <Route path='/addImage' element={<UserProtecteRoute><ImageAdd /></UserProtecteRoute>} />
             <Route path='/viewImages' element={<UserProtecteRoute><ViewImages /></UserProtecteRoute>} />
+            <Route path='/editImage' element={<UserProtecteRoute><EditImage /></UserProtecteRoute>} />
           </Routes>
         </Router>
 

@@ -7,7 +7,7 @@ const userRoutes = {
     logout: '/user/logout',
     addImage: '/image/addImage',
     editImage: '/image/editImage',
-    deleteImage: '/user/deleteImage',
+    deleteImage: '/image/deleteImage',
     viewImages: '/image/viewImages',
     rearrangeImages: '/user/rearrangeImages',
 }

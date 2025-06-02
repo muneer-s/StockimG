@@ -21,9 +21,32 @@ const { userToken, userData } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-        if (userToken) navigate('/');
-    }, [userToken, navigate]);
+  // useEffect(() => {
+  //       if (userToken) navigate('/');
+  //       else logout()
+  //   }, [userToken, navigate]);
+
+
+
+//     useEffect(() => {
+//   const handleAutoLogout = async () => {
+//     if (!userToken) {
+//       try {
+//         if (userData?.email) {
+//           await logout(userData.email); // Only if your API requires email for logout
+//         }
+//         dispatch(userLogout());
+//         toast('Session expired or logged out', { icon: '⚠️' });
+//         navigate('/login');
+//       } catch (error: any) {
+//         toast.error('Auto logout failed');
+//       }
+//     }
+//   };
+
+//   handleAutoLogout();
+// }, [userToken, navigate, dispatch, userData]);
+
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
