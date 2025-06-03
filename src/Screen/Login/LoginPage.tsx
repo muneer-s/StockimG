@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Eye, EyeOff, Sparkles, Heart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../Api/api";
-import { saveUser, setUserCredential } from "../../Redux/AuthSlice";
+import {  setUserCredential } from "../../Redux/AuthSlice";
 import { useAppDispatch } from "../../Redux/store";
 import toast from "react-hot-toast";
 import Header from "../../Components/Header/Header";
@@ -75,7 +75,6 @@ const LoginPage = () => {
 
       console.log(9999, user);
       toast.success(response.message);
-      dispatch(saveUser(response.data.userAccessToken));
       dispatch(setUserCredential(user));
       navigate('/');
     } catch (err: any) {
@@ -89,7 +88,7 @@ const LoginPage = () => {
   return (
     <>
       <Header />
-      <div className="min-h-screen relative overflow-hidden">
+      <div className="min-h-screen relative overflow-hidden mt-20">
         {/* Animated Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-violet-900 via-rose-900 to-pink-900">
           <div className="absolute inset-0 opacity-30">

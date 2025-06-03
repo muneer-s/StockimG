@@ -13,7 +13,7 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { deleteImage, getImages, updateImageOrder } from '../../Api/api';
+import { deleteImage, getImages, logout, updateImageOrder } from '../../Api/api';
 import { useAppSelector } from '../../Redux/store';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
@@ -72,11 +72,15 @@ const ImageLists = () => {
     const fetchImages = async () => {
       try {
         const res: any = await getImages(userData.email);
+        console.log(2222, res);
+
         const sorted = res.images.sort((a: ImageData, b: ImageData) => a.position - b.position);
         setImages(sorted);
-      } catch (err) {
-        console.error('Failed to fetch images', err);
-        
+      } catch (error: any) {
+        console.error('Failed to fetch images', error)
+        toast.error(error.response?.data?.message || "Something went wrong");
+        await logout(userData.email); // await logout
+        navigate('/login');
       }
     };
 

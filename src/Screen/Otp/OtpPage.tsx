@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { verifyOtp } from '../../Api/api';
 import { useAppDispatch } from '../../Redux/store';
-import { saveUser, setUserCredential } from '../../Redux/AuthSlice';
+import {  setUserCredential } from '../../Redux/AuthSlice';
 import Header from '../../Components/Header/Header';
 
 
@@ -44,8 +44,6 @@ const OtpPage = () => {
 
             if (result?.success) {
                 dispatch(setUserCredential(result.data.userData));
-                dispatch(saveUser(result.data.userAccessToken));
-
                 toast.success(result.message || 'OTP Verified Successfully!');
                 navigate('/');
             } else {

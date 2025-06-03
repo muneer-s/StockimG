@@ -1,16 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const userInfoRaw = localStorage.getItem('userInfo');
-const userAddressRaw = localStorage.getItem('userAddress');
 
 const initialState = {
     userData:
         userInfoRaw && userInfoRaw !== 'undefined'
             ? JSON.parse(userInfoRaw)
-            : null,
-    userToken:
-        userAddressRaw && userAddressRaw !== 'undefined'
-            ? JSON.parse(userAddressRaw)
             : null,
 };
 
@@ -18,10 +13,6 @@ export const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        saveUser: (state, action) => {
-            state.userToken = action.payload;
-            localStorage.setItem('userToken', JSON.stringify(action.payload));
-        },
         setUserCredential: (state, action) => {
             state.userData = action.payload;
             if (action.payload) {
@@ -32,9 +23,7 @@ export const authSlice = createSlice({
         },
         userLogout: (state) => {
             state.userData = null;
-            state.userToken = null;
             localStorage.removeItem('userInfo');
-            localStorage.removeItem('userAddress');
         }
 
     },
@@ -44,8 +33,6 @@ export const authSlice = createSlice({
 export const {
     setUserCredential,
     userLogout,
-    saveUser,
-
 } = authSlice.actions
 
 export default authSlice.reducer;

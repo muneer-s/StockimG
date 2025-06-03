@@ -10,6 +10,7 @@ import { store } from "./Redux/store";
 import UserProtecteRoute from "./Middleware/UserProtecteRoute";
 import EditImage from "./Screen/EditImage/EditImage";
 import { Toaster } from 'react-hot-toast';
+import PageNotFound from "./Components/PageNotFound/PageNotFound";
 
 function App() {
   return (
@@ -28,6 +29,9 @@ function App() {
             <Route path='/addImage' element={<UserProtecteRoute><ImageAdd /></UserProtecteRoute>} />
             <Route path='/viewImages' element={<UserProtecteRoute><ViewImages /></UserProtecteRoute>} />
             <Route path='/editImage' element={<UserProtecteRoute><EditImage /></UserProtecteRoute>} />
+
+             {/* Catch-all for 404 */}
+            <Route path="*" element={<PageNotFound />} />
           </Routes>
         </Router>
 

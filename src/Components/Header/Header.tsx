@@ -13,8 +13,8 @@ const Header = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
-const { userToken, userData } = useAppSelector((state) => state.auth);
-  console.log('userToken :    ',userToken);
+const {  userData } = useAppSelector((state) => state.auth);
+  // console.log('userToken :    ',userToken);
   console.log('userData :    ',userData);
 
 
